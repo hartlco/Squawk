@@ -26,21 +26,14 @@ public class Squawk {
     public static let shared = Squawk()
 
     public func show(
-        in view: UIView? = nil,
+        in view: UIView,
         config: Squawk.Configuration
         ) {
-        let viewToUse: UIView?
-        if view == nil, let top = UIApplication.shared.keyWindow?.rootViewController?.topMostChild {
-            viewToUse = top.view
-        } else {
-            viewToUse = view
-        }
-        guard let baseView = viewToUse else { return }
 
         // get rid of any view if currently displaying
         activeItem?.dismiss()
 
-        let item = SquawkItem(config: config, in: baseView)
+        let item = SquawkItem(config: config, in: view)
         activeItem = item
 
         item.view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(onPan(gesture:))))
